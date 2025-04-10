@@ -1,0 +1,89 @@
+﻿@model Estacionamento.Dtos.Request.RegistroEstacionamentoRequest
+
+
+@foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+{
+	<div class="alert alert-danger">@modelError.ErrorMessage</div>
+}
+
+
+
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card shadow-sm border-0 rounded-3">
+				<div class="card-header bg-primary text-white text-center">
+					<h4>Cadastrar Veículo</h4>
+				</div>
+				<div class="card-body bg-light">
+					<form asp-action="CadastrarVeiculo" asp-controller="Estacionamento" method="post" onsubmit="return formatarPlaca()">
+						<div class="form-group mb-3">
+							<label for="placa" class="form-label">Placa</label>
+							<input type="text" class="form-control" id="placa" name="PlacaCarro" placeholder="Digite a placa" required maxlength="8" />
+							<span asp-validation-for="PlacaCarro" class="text-danger"></span>
+
+						</div>
+
+						<div class="form-group mb-4">
+							<label for="horarioEntrada" class="form-label">Horário de Entrada</label>
+							<input type="text" class="form-control" id="horarioEntrada" name="HorarioEntrada" readonly />
+						</div>
+
+						<div class="d-flex justify-content-between">
+							<button type="submit" class="btn btn-primary">Registrar</button>
+							<a asp-controller="Estacionamento" asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mt-5 d-flex justify-content-end">
+		<a class="border-0 btn btn-sm btn-primary" asp-controller="Estacionamento" asp-action="Index">Voltar ao início</a>
+	</div>
+</div>
+@section Scripts {
+	<script>
+		const now = new Date();
+		const dia = now.getDate();
+		const mes = now.getMonth() + 1;
+		const ano = now.getFullYear();
+		const hora = now.getHours();
+		const minutos = now.getMinutes();
+
+		document.getElementById('horarioEntrada').value = `${dia}/${mes}/${ano} - ${hora}h${minutos}min`;
+
+
+
+
+		document.getElementById("placa").addEventListener("input", function (e) {
+			let valor = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+			if (valor.length > 3) {
+				valor = valor.slice(0, 3) + '-' + valor.slice(3);
+			}
+			e.target.value = valor.slice(0, 8);
+
+		});
+
+
+		function formatarPlaca(){
+				const placaInput = document.getElementById("placa");
+				placaInput.value = placaInput.value.replace("-", "");
+				return true;
+
+		}
+
+
+	</script>
+
+}
+
+
+@*
+
+o dado do input name="recebe o nome do atributo"
+
+
+
+*@

@@ -1,0 +1,81 @@
+﻿@model Estacionamento.Models.Login
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensagem"]</div>
+}
+
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensagem"]</div>
+}
+
+<div class="container vh-100 d-flex align-items-center justify-content-center">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-10">
+            <div class="row shadow-sm border rounded-3 overflow-hidden">
+
+                <!-- Lado Esquerdo: Logo -->
+                <div class="col-md-6 bg-light text-center d-flex flex-column justify-content-center">
+                    <img src="/Imagens/logo.png" alt="Logo PerTime" class="img-fluid mx-auto mb-3" style="max-width: 70%;" />
+                </div>
+
+                <!-- Lado Direito: Formulário -->
+                <div class="col-md-6 bg-white p-4">
+                    <h4 class="text-center text-primary mb-3">Acesse sua conta</h4>
+
+                    <form asp-action="Login" asp-controller="LoginAccount" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                        <div class="form-group mb-3">
+                            
+
+                             <label asp-for="Email" class="form-label">Email</label> 
+                             <input asp-for="Email" class="form-control" placeholder="seu@email.com" autofocus /> 
+                             <span asp-validation-for="Email" class="text-danger"></span> 
+                        </div>
+
+                        <div class="form-group mb-3">
+                            
+
+                             <label asp-for="Senha" class="form-label">Senha</label> 
+                             <input asp-for="Senha" type="password" class="form-control" placeholder="Sua senha" /> 
+                             <span asp-validation-for="Senha" class="text-danger"></span> 
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" />
+                            <label class="form-check-label">Lembrar-me</label>
+
+
+
+                            @* <input asp-for="RememberMe" class="form-check-input" type="checkbox" />  *@
+                            @* <label asp-for="RememberMe" class="form-check-label">Lembrar-me</label> *@
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </div>
+
+
+                        <div class="text-center small">
+                            <div class="mb-1">
+                                <a asp-action="ForgotPassword" asp-controller="Index" class="text-primary">Esqueceu sua senha?</a>
+                            </div>
+                            <div>
+                                Não tem uma conta?
+                                <a asp-action="Register" asp-controller="Index" class="text-primary">Criar conta</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

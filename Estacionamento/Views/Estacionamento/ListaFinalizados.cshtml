@@ -1,0 +1,61 @@
+﻿@model List<RegistroEstacionamento>
+
+
+<div class="container mt-5">
+	<div class="card shadow-sm">
+		<div class="card-header text-white bg-primary">
+			<h4 class="mb-0">Vagas Finalizadas</h4>
+		</div>
+		<div class="card-body">
+			@if (!Model.Any())
+			{
+				<p class="text-muted">Nenhuma vaga finalizada no momento.</p>
+			}
+			else
+			{
+				<div class="table-responsive">
+					<table class="table table-bordered align-middle">
+						<thead class="table-light">
+							<tr>
+								<th>Placa</th>
+								<th>Horário de Entrada</th>
+								<th>Horário de Saída</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var veiculo in Model)
+							{
+								@if (veiculo.Finalizado == true)
+								{
+
+									<tr>
+										<td id="placa">@veiculo.PlacaCarro</td>
+										<td>@veiculo.HorarioEntrada.ToString("dd/MM/yyyy - HH'h'mm'min'")</td>
+										<td>@veiculo.HorarioSaida</td>
+									</tr>
+
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+			}
+		</div>
+	</div>
+	<div class="mt-5 d-flex justify-content-end">
+		<a class="border-0 btn btn-sm btn-primary" asp-controller="Estacionamento" asp-action="Index">Voltar ao início</a>
+	</div>
+</div>
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+
+			const placaTd = document.getElementById("placa");
+			if (placaTd) {
+				const placaTexto = placaTd.innerText;
+				if (placaTexto.length >= 3 && !placaTexto.includes('-')) {
+					placaTd.innerText = placaTexto.slice(0, 3) + '-' + placaTexto.slice(3);
+				}
+			}
+		});</script>
