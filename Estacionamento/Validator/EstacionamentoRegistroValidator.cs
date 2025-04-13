@@ -20,7 +20,9 @@ namespace Estacionamento.Validator
 
         public async Task<bool> PlacaUnica(string placa, CancellationToken token)
         {
-            return !await _context.RegistrosEstacionamentos.AnyAsync(p => p.PlacaCarro == placa);
+        
+
+            return !await _context.RegistrosEstacionamentos.AnyAsync(p => p.PlacaCarro == placa && !p.Finalizado, token);
 
         }
     }

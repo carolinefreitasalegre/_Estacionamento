@@ -1,5 +1,7 @@
 using Estacionamento.Dtos.Request;
+using Estacionamento.Enums;
 using Estacionamento.Services;
+using Estacionamento.Services.FactoryMethod;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,21 +25,13 @@ namespace Estacionamento.Controllers
         }
 
 
-
-
         #region Metodos Views
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Index(string? token = null)
         {
             ViewBag.Token = token;
             return View();
         }
-
-
 
 
         public IActionResult CadastrarVeiculo()
@@ -59,8 +53,6 @@ namespace Estacionamento.Controllers
         }
 
 
-
-
         [HttpGet]
         public async Task<IActionResult> EditarVeiculo(RegistroEstacionametoEdicaoRequest request)
         {
@@ -80,6 +72,10 @@ namespace Estacionamento.Controllers
 
             try
             {
+
+               
+
+
                 var validarRegistro = await _validator.ValidateAsync(request);
 
 
@@ -167,19 +163,60 @@ namespace Estacionamento.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> FinalizarVaga(Guid Id)
+        [HttpGet]
+        public async Task<IActionResult> EfetuarPagamento(RegistroEstacionametoEdicaoRequest request)
         {
-            var finalizar = await _service.FinalizarVaga(Id);
+            var registro = await _service.BuscarRegistro(request.Id);
 
-            if (finalizar == null)
+
+            if (registro == null)
+                return NotFound("Registro não encontrado");
+
+            return View("EfetuarPagamento", registro);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EfetuarPagamento(Guid Id, RegistroEstacionametoEdicaoRequest request)
+        {
+            var registro = await _service.BuscarRegistro(Id);
+
+            if (registro == null)
             {
-                return NotFound();
+                return NotFound("Registro não encontrado.");
             }
 
-            TempData["Mensagem"] = "Vaga finalizada com sucesso!";
-            return View("AreaPagamento", finalizar);
+            try
+            {
+                registro.MetodoPagamento = request.MetodoPagamento;
+
+                var pagamento = new RegistroEstacionametoEdicaoRequest
+                {
+                    HorarioEntrada = registro.HorarioEntrada,
+                    HorarioSaida = DateTime.Now,
+                    MetodoPagamento = request.MetodoPagamento
+                };
+
+
+
+                var pagamentoService = MetodoPagamentoFactory.GerarMetodoPagamento(request.MetodoPagamento);
+                var registroPago = await pagamentoService.ProcessarPagamento(registro);
+
+                await _service.EfetuarPagamento(Id, pagamento);
+
+                TempData["Mensagem"] = "Vaga finalizada com sucesso!";
+                return RedirectToAction("ListaFinalizados", registroPago);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
         }
+
+
+
 
         [HttpGet]
         public async Task<IActionResult> ListaFinalizados()
@@ -189,11 +226,6 @@ namespace Estacionamento.Controllers
             return View("ListaFinalizados", finalizados);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AreaPagamento()
-        {
-            return View("AreaPagamento");
-        }
 
 
         #endregion

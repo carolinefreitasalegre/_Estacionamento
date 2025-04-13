@@ -38,18 +38,13 @@ namespace Estacionamento.DataAccess.Repositories
         }
 
 
-        public async Task<RegistroEstacionamento> FinalizarVaga(Guid Id)
+        public async Task<RegistroEstacionamento> EfetuarPagamento(Guid Id, RegistroEstacionamento request)
         {
-            var registro = await _context.RegistrosEstacionamentos.FirstOrDefaultAsync(x => x.Id == Id)
-                ?? throw new KeyNotFoundException("Registro não encontrado");
-
-            registro.Finalizado = true;
-
+           var registro = _context.RegistrosEstacionamentos.FirstOrDefault(r => r.Id == Id) ?? throw new Exception("Registro não encontrado.");
 
             _context.RegistrosEstacionamentos.Update(registro);
             await _context.SaveChangesAsync();
-
-            return registro;
+            return request;
 
         }
 

@@ -2,7 +2,6 @@
 {
     public enum MetodoPagamento
     {
-        Dinheiro,
         Pix,
         Credito,
         Debito

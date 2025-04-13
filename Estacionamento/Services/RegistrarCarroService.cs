@@ -25,6 +25,8 @@ namespace Estacionamento.Services
         {
            
 
+
+
             try
             {
                 var novo_registro = new RegistroEstacionamento()
@@ -33,6 +35,7 @@ namespace Estacionamento.Services
                     PlacaCarro = request.PlacaCarro,
                     HorarioEntrada = DateTime.Now,
                 };
+
 
                 return await _repository.RegistrarCarro(novo_registro);
 
@@ -73,7 +76,7 @@ namespace Estacionamento.Services
 
         }
 
-        public async Task<RegistroEstacionamento> FinalizarVaga(Guid Id)
+        public async Task<RegistroEstacionamento> EfetuarPagamento(Guid Id, RegistroEstacionametoEdicaoRequest request)
         {
             try
             {
@@ -86,8 +89,17 @@ namespace Estacionamento.Services
                 var calculo = new EstacionamentoCalculoService();
                 registro.ValorPagar = _calculoService.CalcularValorPagar(registro.HorarioEntrada, registro.HorarioSaida);
 
+                if (registro.Pago == true)
+                {
+                    registro.Finalizado = true;
+                }
+                else
+                {
+                    registro.Finalizado = false;
+                }
+                    
 
-                await _repository.FinalizarVaga(Id);
+                await _repository.EditarRegistro(registro);
 
                 return registro;
 
@@ -102,3 +114,12 @@ namespace Estacionamento.Services
 
     }
 }
+/*
+ 
+ area de pagamento
+* receber  o valor
+* selecionar a forma de pagamento
+* pagar
+* chamar a função finalizar vaga
+ 
+ */

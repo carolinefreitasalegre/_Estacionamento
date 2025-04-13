@@ -8,5 +8,7 @@ namespace Estacionamento.Dtos.Request
         [StringLength(7, MinimumLength = 7, ErrorMessage = "A placa deve ter 7 caracteres.")]
         public string PlacaCarro { get; set; }
         public DateTime HorarioEntrada { get; set; }
+
+        public bool Finalizado {  get; set; }
     }
 }
