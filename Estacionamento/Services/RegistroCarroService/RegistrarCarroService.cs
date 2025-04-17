@@ -1,8 +1,9 @@
-﻿using Estacionamento.DataAccess.Contratos;
+﻿using Estacionamento.DataAccess.Repositories.RegistroCarroRepository;
 using Estacionamento.Dtos.Request;
 using Estacionamento.Models;
+using Estacionamento.Services.PagamentoService;
 
-namespace Estacionamento.Services
+namespace Estacionamento.Services.RegistroCarroService
 {
     public class RegistrarCarroService : IRegistrarCarroService
     {
@@ -23,7 +24,7 @@ namespace Estacionamento.Services
 
         public async Task<RegistroEstacionamento> RegistrarCarro(RegistroEstacionamentoRequest request)
         {
-           
+
 
 
 
@@ -97,7 +98,7 @@ namespace Estacionamento.Services
                 {
                     registro.Finalizado = false;
                 }
-                    
+
 
                 await _repository.EditarRegistro(registro);
 
@@ -114,12 +115,3 @@ namespace Estacionamento.Services
 
     }
 }
-/*
- 
- area de pagamento
-* receber  o valor
-* selecionar a forma de pagamento
-* pagar
-* chamar a função finalizar vaga
- 
- */

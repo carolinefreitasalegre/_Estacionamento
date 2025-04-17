@@ -1,12 +1,16 @@
-﻿using Estacionamento.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using Estacionamento.Enums;
 
 namespace Estacionamento.Models
 {
     public class RegistroEstacionamento
     {
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        
+
+        [Required]
         public string PlacaCarro { get; set; }
+        [Required]
         public DateTime HorarioEntrada { get; set; }
         public DateTime? HorarioSaida { get; set; }
 

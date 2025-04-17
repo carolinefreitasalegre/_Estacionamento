@@ -1,16 +1,15 @@
 ﻿using Estacionamento.DataAccess.ContextApi;
-using Estacionamento.DataAccess.Contratos;
 using Estacionamento.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Estacionamento.DataAccess.Repositories
+namespace Estacionamento.DataAccess.Repositories.RegistroCarroRepository
 {
     public class RegistrarCarroRepository : IRegistrarCarroRepository
     {
 
         private readonly AppDbContext _context;
 
-        public  RegistrarCarroRepository(AppDbContext context)
+        public RegistrarCarroRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -40,7 +39,7 @@ namespace Estacionamento.DataAccess.Repositories
 
         public async Task<RegistroEstacionamento> EfetuarPagamento(Guid Id, RegistroEstacionamento request)
         {
-           var registro = _context.RegistrosEstacionamentos.FirstOrDefault(r => r.Id == Id) ?? throw new Exception("Registro não encontrado.");
+            var registro = _context.RegistrosEstacionamentos.FirstOrDefault(r => r.Id == Id) ?? throw new Exception("Registro não encontrado.");
 
             _context.RegistrosEstacionamentos.Update(registro);
             await _context.SaveChangesAsync();
@@ -50,25 +49,19 @@ namespace Estacionamento.DataAccess.Repositories
 
         public async Task<RegistroEstacionamento> BuscarRegistro(Guid Id)
         {
-            try
-            {
-                var registro = await _context.RegistrosEstacionamentos.FirstOrDefaultAsync(x => x.Id == Id) 
-                    ?? throw new KeyNotFoundException("Registro nao ecncontrado.");
 
-                return registro;
-            }
-            catch (Exception ex)
-            {
+            var registro = await _context.RegistrosEstacionamentos.FirstOrDefaultAsync(x => x.Id == Id)
+                ?? throw new KeyNotFoundException("Registro nao ecncontrado.");
 
-                throw new KeyNotFoundException("Erro ao buscar registro.", ex);
-            }
+            return registro;
+
         }
 
 
-       
-    
-    
-    
-    
+
+
+
+
+
     }
 }

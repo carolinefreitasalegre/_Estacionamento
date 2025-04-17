@@ -1,10 +1,11 @@
-using System.Security.Cryptography;
 using System.Text;
 using Estacionamento.DataAccess.ContextApi;
-using Estacionamento.DataAccess.Contratos;
-using Estacionamento.DataAccess.Repositories;
+using Estacionamento.DataAccess.Repositories.RegistroAdmRepository;
+using Estacionamento.DataAccess.Repositories.RegistroCarroRepository;
 using Estacionamento.Dtos.Request;
-using Estacionamento.Services;
+using Estacionamento.Services.PagamentoService;
+using Estacionamento.Services.RegistroAdmService;
+using Estacionamento.Services.RegistroCarroService;
 using Estacionamento.Validator;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,9 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-
 
 
 
@@ -50,10 +48,20 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddScoped<EstacionamentoCalculoService>();
+
 builder.Services.AddScoped<IRegistrarCarroRepository, RegistrarCarroRepository>();
 builder.Services.AddScoped<IRegistrarCarroService, RegistrarCarroService>();
+
+
+builder.Services.AddScoped<IRegistrarAdmRepository, RegistrarAdmRepository>();
+builder.Services.AddScoped<IRegistrarAdmService, RegistrarAdmService>();
+
+
+
 builder.Services.AddTransient<IValidator<RegistroEstacionamentoRequest>, EstacionamentoRegistroValidator>();
 builder.Services.AddTransient<IValidator<RegistroEstacionametoEdicaoRequest>, EdicaoEstacionamentoRegistroValidation>();
+builder.Services.AddTransient<IValidator<RegistroAdmRequest>, EstacionamentoRegistroAdminValidator>();
+builder.Services.AddTransient<IValidator<RegistroAdmEdicaoRequest>, EdicaoAdminValidator>();
 
 
 // Add services to the container.
@@ -72,16 +80,16 @@ var app = builder.Build();
 
 
 
-app.Use(async (context, next) =>
-{
-    // Log all headers for debugging
-    foreach (var header in context.Request.Headers)
-    {
-        Console.WriteLine($"{header.Key}: {header.Value}");
-    }
+//app.Use(async (context, next) =>
+//{
+//    // Log all headers for debugging
+//    foreach (var header in context.Request.Headers)
+//    {
+//        Console.WriteLine($"{header.Key}: {header.Value}");
+//    }
 
-    await next();
-});
+//    await next();
+//});
 
 
 

@@ -1,7 +1,7 @@
 ﻿using Estacionamento.Dtos.Request;
 using Estacionamento.Models;
 
-namespace Estacionamento.Services
+namespace Estacionamento.Services.RegistroCarroService
 {
     public interface IRegistrarCarroService
     {

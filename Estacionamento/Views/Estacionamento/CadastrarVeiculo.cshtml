@@ -1,6 +1,10 @@
 ﻿@model Estacionamento.Dtos.Request.RegistroEstacionamentoRequest
 
 
+@{
+	ViewData["Title"] = "Cadastro de Veículo | ";
+}
+
 @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
 {
 	<div class="alert alert-danger">@modelError.ErrorMessage</div>
@@ -80,10 +84,3 @@
 }
 
 
-@*
-
-o dado do input name="recebe o nome do atributo"
-
-
-
-*@

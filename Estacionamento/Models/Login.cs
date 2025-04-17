@@ -1,8 +1,14 @@
-﻿namespace Estacionamento.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Estacionamento.Models
 {
     public class Login
     {
-        public string? Email {  get; set; }
-        public string? Senha { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Senha { get; set; }
     }
 }

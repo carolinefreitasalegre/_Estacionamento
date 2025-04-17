@@ -1,6 +1,6 @@
 ﻿using Estacionamento.Models;
 
-namespace Estacionamento.DataAccess.Contratos
+namespace Estacionamento.DataAccess.Repositories.RegistroCarroRepository
 {
     public interface IRegistrarCarroRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace Estacionamento.Services
+﻿namespace Estacionamento.Services.PagamentoService
 {
     public class EstacionamentoCalculoService
     {

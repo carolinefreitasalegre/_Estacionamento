@@ -1,5 +1,6 @@
 ﻿using Estacionamento.Enums;
-using static Estacionamento.Services.Pagamentos;
+using Estacionamento.Services.PagamentoService;
+using static Estacionamento.Services.PagamentoService.Pagamentos;
 
 namespace Estacionamento.Services.FactoryMethod
 {

@@ -1,6 +1,15 @@
 ﻿@model List<RegistroEstacionamento>
 
 
+@{
+	ViewData["Title"] = "Vagas Finalizadas | ";
+}
+
+@if (TempData["Mensagem"] != null)
+{
+	<div class="alert alert-success">@TempData["Mensagem"]</div>
+}
+
 <div class="container mt-5">
 	<div class="card shadow-sm">
 		<div class="card-header text-white bg-primary">

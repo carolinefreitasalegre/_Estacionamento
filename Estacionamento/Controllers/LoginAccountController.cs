@@ -1,14 +1,26 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Estacionamento.DataAccess.ContextApi;
 using Estacionamento.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Estacionamento.Controllers
 {
+
     public class LoginAccountController : Controller
     {
+
+
+        private readonly AppDbContext _context;
+
+        public LoginAccountController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Login()
         {
             return View();
@@ -16,24 +28,30 @@ namespace Estacionamento.Controllers
 
 
         [HttpPost]
-        public IActionResult Login(Login login)
+        public async Task<IActionResult> Login(Login login)
         {
-            if (login.Email == "admin" && login.Senha == "admin")
+            var usuario = await _context.Administradores.FirstOrDefaultAsync(x => x.Email == login.Email && x.Senha == login.Senha);
+
+            if (usuario != null && usuario.UsuarioValido == true)
             {
                 var token = GerarToken();
 
                 Response.Cookies.Append("access_token", token, new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = false, 
+                    Secure = true,
                     SameSite = SameSiteMode.Lax,
                     Expires = DateTime.Now.AddMinutes(30)
                 });
 
+                var existeAdmin = await _context.Administradores.ToListAsync();
+                Console.WriteLine("Total de admins:", existeAdmin.Count);
+
+                Console.WriteLine(token, usuario);
                 return RedirectToAction("Index", "Estacionamento");
             }
 
-            TempData["Mensagem"] = "Credenciais inválidas";
+            TempData["Mensagem"] = "Credenciais inválidas ou usuário sem permissão de entrada!";
             return View();
         }
 

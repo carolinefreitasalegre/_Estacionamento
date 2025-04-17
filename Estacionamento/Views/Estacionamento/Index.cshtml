@@ -1,11 +1,7 @@
-﻿@if (TempData["Mensagem"] != null)
-{
-	<div class="alert alert-success">@TempData["Mensagem"]</div>
-}
-
+﻿
 
 @{
-    ViewData["Title"] = "Início";
+    ViewData["Title"] = "Início - | ";
 }
 
 @if (TempData["Mensagem"] != null)
@@ -21,7 +17,7 @@
 
 
 <div class="container py-5">
-    <h1 class="text-center mb-5 fw-bold text-primary">Sistema de Registro de Veículos</h1>
+    <h2 class="text-center mb-5 fw-bold text-primary">Sistema de Registro de Veículos</h2>
 
     <div class="row justify-content-center g-4">
 
@@ -72,7 +68,8 @@
                     </div>
                     <h2 class="card-title h4 mb-3">Administradores</h2>
                     <p class="card-text text-muted mb-4">Gerencie as contas administrativas</p>
-                    <a class="btn btn-danger w-100 py-2 rounded-3 mt-4" color: white;">Acessar</a>
+                    <a asp-controller="Administrador" asp-action="Index" class="btn btn-danger w-100 py-2 rounded-3 mt-4" mt-3>Acessar</a>
+
                 </div>
             </div>
         </div>
@@ -83,10 +80,7 @@
 
 
 <style>
-    body {
-        min-height: 100vh;
-        background: linear-gradient(135deg, #EBF4FF 0%, #E1EFFE 100%);
-    }
+	
 
     .card {
         transition: box-shadow 0.3s ease;

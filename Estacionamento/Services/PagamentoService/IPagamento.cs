@@ -1,6 +1,6 @@
 ﻿using Estacionamento.Models;
 
-namespace Estacionamento.Services
+namespace Estacionamento.Services.PagamentoService
 {
     public interface IPagamento
     {

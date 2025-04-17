@@ -1,6 +1,9 @@
-﻿@* @model Estacionamento.Dtos.Response.RegistroEstacionamentoResponse *@
-@model List<RegistroEstacionamento>
+﻿@model List<RegistroEstacionamento>
 
+
+@{
+	ViewData["Title"] = "Lista de Veículos | ";
+}
 
 @if (TempData["Mensagem"] != null)
 {
@@ -12,13 +15,7 @@
 <div class="container mt-5">
 	<div class="card shadow-sm">
 
-		<div class="input-group mb-3" style="width: 100%; display: flex; justify-content: end">
-			<input type="text" class="form-control" placeholder="Buscar..." style="max-width: 30%; aria-label=" Buscar" aria-describedby="button-search" maxlength="7">
-			<button class="btn btn-primary" type="button" id="button-search">
-				<i class="fas fa-search"></i>
-			</button>
-		</div>
-
+	
 
 		<div class="card-header text-white bg-primary">
 			<h4 class="mb-0">Carros Estacionados</h4>

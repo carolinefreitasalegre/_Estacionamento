@@ -1,7 +1,6 @@
 using Estacionamento.Dtos.Request;
-using Estacionamento.Enums;
-using Estacionamento.Services;
 using Estacionamento.Services.FactoryMethod;
+using Estacionamento.Services.RegistroCarroService;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -72,9 +71,6 @@ namespace Estacionamento.Controllers
 
             try
             {
-
-               
-
 
                 var validarRegistro = await _validator.ValidateAsync(request);
 
@@ -233,23 +229,7 @@ namespace Estacionamento.Controllers
 
 
 
-        // dialog para detalhar veiculo como hra de entrada,... com btn de anular e editar
-        // ao clicar em editar 
+       
     }
 }
 
-
-/*
-    colocar:  asp-controller="Home" asp-action="Veiculos" 
-    home = nome da controller
-    action = nome da rota desejada
-
- 
-
-    quando nao colocatdo nenhum http, ele entende como um get
-
-    para editar precisa da rota get e da rota post 
-
-    
-
-*/

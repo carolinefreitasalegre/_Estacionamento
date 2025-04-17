@@ -1,0 +1,69 @@
+﻿@* @model Estacionamento.Dtos.Request.EditarAdmViewModel *@
+@model Estacionamento.Dtos.Request.RegistroAdmEdicaoRequest
+
+@{
+	ViewData["Title"] = "Editar Administrador | ";
+}
+
+
+
+<div class="modal-header">
+	<h5 class="modal-title" id="editModalLabel">Editar Administrador</h5>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+	<form method="post" asp-action="EditarAdm" asp-controller="Administrador">
+		<input type="hidden" name="Id" value="@Model.Id" />
+
+		<!-- Nome -->
+		<div class="mb-3">
+			<label for="editNome" class="form-label">Nome</label>
+			<div class="input-group">
+				<span class="input-group-text">
+					<i class="bi bi-person"></i>
+				</span>
+				<input type="text" required class="form-control" id="editNome" name="Nome" value="@Model.Nome">
+			</div>
+		</div>
+
+		<!-- Email -->
+		<div class="mb-3">
+			<label for="editEmail" class="form-label">Email</label>
+			<div class="input-group">
+				<span class="input-group-text">
+					<i class="bi bi-envelope"></i>
+				</span>
+				<input type="email" required class="form-control" id="editEmail" name="Email" value="@Model.Email">
+			</div>
+		</div>
+		<!-- Senha -->
+		<div class="mb-3">
+			<label for="editEmail" class="form-label">Senha</label>
+			<div class="input-group">
+				<span class="input-group-text">
+					<i class="bi bi-envelope"></i>
+				</span>
+				<input type="password" required class="form-control" id="editSenha" name="Senha" value="@Model.Senha">
+			</div>
+		</div>
+
+		<!-- Status -->
+		<div class="mb-3">
+			<label for="editStatus" class="form-label">Status</label>
+			<div class="input-group">
+				<span class="input-group-text">
+					<i class="bi bi-toggle-on"></i>
+				</span>
+				<select class="form-select" required id="editStatus" name="UsuarioValido">
+					<option value="true" selected="@Model.UsuarioValido">Ativo</option>
+					<option value="false" selected="@(!Model.UsuarioValido)">Inativo</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+			<button class="btn btn-primary" type="submit">Salvar Alterações</button>
+		</div>
+	</form>
+</div>

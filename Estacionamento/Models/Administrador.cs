@@ -1,4 +1,6 @@
-﻿namespace Estacionamento.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Estacionamento.Models
 {
     public class Administrador
     {
@@ -9,9 +11,17 @@
             Senha = senha;
         }
 
-        public  Guid Id {get;set;}
-        public string Nome {  get; set; }
-        public string Email {  get; set; }
-        public string Senha {  get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        [Required, StringLength(30)]
+
+        public string Nome { get; set; }
+        [Required, StringLength(30)]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required, StringLength(30),]
+        public string Senha { get; set; }
+
+        public bool UsuarioValido { get; set; } = true;
     }
 }

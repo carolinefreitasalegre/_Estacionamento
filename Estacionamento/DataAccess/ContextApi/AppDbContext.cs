@@ -11,5 +11,6 @@ namespace Estacionamento.DataAccess.ContextApi
 
         public DbSet<RegistroEstacionamento> RegistrosEstacionamentos {  get; set; }
         public DbSet<TabelaValor> TabelaValores { get; set; }
+        public DbSet<Administrador> Administradores { get; set; }
     }
 }

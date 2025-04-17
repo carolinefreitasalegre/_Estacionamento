@@ -1,43 +1,50 @@
-﻿@* @model Estacionamento.Models.RegistroEstacionamento *@
-@model Estacionamento.Dtos.Request.RegistroEstacionametoEdicaoRequest
+﻿@model Estacionamento.Models.RegistroEstacionamento
 
 
+@{
+	ViewData["Title"] = "Área de Pagamento | ";
+}
 
-<form method="post" asp-controller="Estacionamento" asp-action="EfetuarPagamento">
-	<input type="hidden" name="id" value="@Model.Id" />
+<div class="container mt-5">
+	<div class="card shadow-sm">
+		<div class="card-body">
 
-	<div class="mb-4">
-		<h5 class="text-secondary">Valor a pagar:</h5>
-		<h3 class="text-primary fw-bold">R$ @Model.ValorPagar</h3>
-	</div>
+			<form method="post" asp-controller="Estacionamento" asp-action="EfetuarPagamento">
+				<input type="hidden" name="id" value="@Model.Id" />
 
-	<div class="mb-4">
-		<label class="form-label">Forma de Pagamento</label>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="MetodoPagamento" value="Pix" id="pix" checked>
-			<label class="form-check-label" for="pix">PIX</label>
+				<div class="mb-4">
+					<h5 class="text-secondary">Valor a pagar:</h5>
+					<h3 class="text-primary fw-bold">R$ @Model.ValorPagar</h3>
+				</div>
+
+				<div class="mb-4">
+					<label class="form-label">Forma de Pagamento</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="MetodoPagamento" value="Pix" id="pix" checked>
+						<label class="form-check-label" for="pix">PIX</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="MetodoPagamento" value="Debito" id="debito">
+						<label class="form-check-label" for="debito">Cartão de Débito</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="MetodoPagamento" value="Credito" id="credito">
+						<label class="form-check-label" for="credito">Cartão de Crédito</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-6">
+						<button class="btn btn-primary w-100" type="submit" id="btn">Confirmar Pagamento</button>
+					</div>
+					<div class="col-6">
+						<a class="btn btn-danger w-100" asp-controller="Estacionamento" asp-action="Veiculos" id="btn">Cancelar</a>
+					</div>
+				</div>
+	
+			</form>
+
+
 		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="MetodoPagamento" value="Debito" id="debito">
-			<label class="form-check-label" for="debito">Cartão de Débito</label>
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="MetodoPagamento" value="Credito" id="credito">
-			<label class="form-check-label" for="credito">Cartão de Crédito</label>
-		</div>
 	</div>
-
-	<div class="d-grid">
-		<button class="btn btn-primary" type="submit" id="btn">Confirmar Pagamento</button>
-	</div>
-</form>
-
-
-			@*
-
-				ao usar o html/view, quando usado o formulario com check, o value="", vai receber o nome que esta no banco de dados e ele faraá a conexçao encaminhando o dado ao clicar em enviar
-
-
-
-
-			*@
+</div>
