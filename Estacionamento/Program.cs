@@ -36,7 +36,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 
-    // Permite ler o token tanto do header quanto do cookie
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -64,7 +63,6 @@ builder.Services.AddTransient<IValidator<RegistroAdmRequest>, EstacionamentoRegi
 builder.Services.AddTransient<IValidator<RegistroAdmEdicaoRequest>, EdicaoAdminValidator>();
 
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 
@@ -80,25 +78,12 @@ var app = builder.Build();
 
 
 
-//app.Use(async (context, next) =>
-//{
-//    // Log all headers for debugging
-//    foreach (var header in context.Request.Headers)
-//    {
-//        Console.WriteLine($"{header.Key}: {header.Value}");
-//    }
-
-//    await next();
-//});
 
 
 
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Estacionamento/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

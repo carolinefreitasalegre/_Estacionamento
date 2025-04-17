@@ -44,10 +44,7 @@ namespace Estacionamento.Controllers
                     Expires = DateTime.Now.AddMinutes(30)
                 });
 
-                var existeAdmin = await _context.Administradores.ToListAsync();
-                Console.WriteLine("Total de admins:", existeAdmin.Count);
 
-                Console.WriteLine(token, usuario);
                 return RedirectToAction("Index", "Estacionamento");
             }
 

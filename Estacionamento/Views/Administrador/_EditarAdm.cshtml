@@ -1,5 +1,4 @@
-﻿@* @model Estacionamento.Dtos.Request.EditarAdmViewModel *@
-@model Estacionamento.Dtos.Request.RegistroAdmEdicaoRequest
+﻿@model Estacionamento.Dtos.Request.RegistroAdmEdicaoRequest
 
 @{
 	ViewData["Title"] = "Editar Administrador | ";
@@ -15,7 +14,6 @@
 	<form method="post" asp-action="EditarAdm" asp-controller="Administrador">
 		<input type="hidden" name="Id" value="@Model.Id" />
 
-		<!-- Nome -->
 		<div class="mb-3">
 			<label for="editNome" class="form-label">Nome</label>
 			<div class="input-group">
@@ -26,7 +24,6 @@
 			</div>
 		</div>
 
-		<!-- Email -->
 		<div class="mb-3">
 			<label for="editEmail" class="form-label">Email</label>
 			<div class="input-group">
@@ -36,7 +33,6 @@
 				<input type="email" required class="form-control" id="editEmail" name="Email" value="@Model.Email">
 			</div>
 		</div>
-		<!-- Senha -->
 		<div class="mb-3">
 			<label for="editEmail" class="form-label">Senha</label>
 			<div class="input-group">
@@ -47,7 +43,6 @@
 			</div>
 		</div>
 
-		<!-- Status -->
 		<div class="mb-3">
 			<label for="editStatus" class="form-label">Status</label>
 			<div class="input-group">

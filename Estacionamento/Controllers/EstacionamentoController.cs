@@ -24,7 +24,6 @@ namespace Estacionamento.Controllers
         }
 
 
-        #region Metodos Views
 
         public IActionResult Index(string? token = null)
         {
@@ -32,13 +31,13 @@ namespace Estacionamento.Controllers
             return View();
         }
 
-
+        [HttpGet]
         public IActionResult CadastrarVeiculo()
         {
             return View();
         }
 
-
+        [HttpGet]
         private async Task<RegistroEstacionametoEdicaoRequest> BuscarRegistroParaEdicao(Guid id)
         {
             var registro = await _service.BuscarRegistro(id)
@@ -60,10 +59,49 @@ namespace Estacionamento.Controllers
         }
 
 
-        #endregion
+        [HttpGet]
+        public async Task<IActionResult> ListaFinalizados()
+        {
+            var finalizados = await _service.ListarCarros();
+
+            return View("ListaFinalizados", finalizados);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Veiculos()
+        {
+            var lista = await _service.ListarCarros();
+
+            return View(lista);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detalhes(Guid Id)
+        {
+            var auto = await _service.BuscarRegistro(Id);
+
+            if (auto == null)
+                return NotFound();
+
+            return PartialView("_DetalhesVeiculo", auto);
+
+        }
 
 
-        #region Metodos Lógica
+        [HttpGet]
+        public async Task<IActionResult> EfetuarPagamento(RegistroEstacionametoEdicaoRequest request)
+        {
+            var registro = await _service.BuscarRegistro(request.Id);
+
+
+            if (registro == null)
+                return NotFound("Registro não encontrado");
+
+            return View("EfetuarPagamento", registro);
+        }
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> CadastrarVeiculo(RegistroEstacionamentoRequest request)
@@ -97,28 +135,7 @@ namespace Estacionamento.Controllers
                 throw new Exception("Ocorre um erro ao tentar registrar carro", ex);
             }
         }
-
-
-        [HttpGet]
-        public async Task<IActionResult> Veiculos()
-        {
-            var lista = await _service.ListarCarros();
-
-            return View(lista);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Detalhes(Guid Id)
-        {
-            var auto = await _service.BuscarRegistro(Id);
-
-            if (auto == null)
-                return NotFound();
-
-            return PartialView("_DetalhesVeiculo", auto);
-
-        }
-
+     
 
         [HttpPost]
         public async Task<IActionResult> EditarVeiculo(Guid Id, RegistroEstacionametoEdicaoRequest request)
@@ -157,20 +174,6 @@ namespace Estacionamento.Controllers
                 throw new Exception("Erro ao salvar alteração", ex);
             }
         }
-
-
-        [HttpGet]
-        public async Task<IActionResult> EfetuarPagamento(RegistroEstacionametoEdicaoRequest request)
-        {
-            var registro = await _service.BuscarRegistro(request.Id);
-
-
-            if (registro == null)
-                return NotFound("Registro não encontrado");
-
-            return View("EfetuarPagamento", registro);
-        }
-
 
         [HttpPost]
         public async Task<IActionResult> EfetuarPagamento(Guid Id, RegistroEstacionametoEdicaoRequest request)
@@ -212,24 +215,6 @@ namespace Estacionamento.Controllers
         }
 
 
-
-
-        [HttpGet]
-        public async Task<IActionResult> ListaFinalizados()
-        {
-            var finalizados = await _service.ListarCarros();
-
-            return View("ListaFinalizados", finalizados);
-        }
-
-
-
-        #endregion
-
-
-
-
-       
     }
 }
 

@@ -26,7 +26,6 @@ namespace Estacionamento.Controllers
 
         public IActionResult Index(string? token = null)
         {
-            //ViewBag.Token = token;
             return View();
         }
 
@@ -64,6 +63,7 @@ namespace Estacionamento.Controllers
 
             return PartialView("_EditarAdm", viewModel);
         }
+
 
 
         [HttpPost]
@@ -104,8 +104,6 @@ namespace Estacionamento.Controllers
             
 
         }
-
-
 
 
         [HttpPost]
@@ -159,24 +157,6 @@ namespace Estacionamento.Controllers
 
             return View(adm);
         }
-
-
-        //private async Task<EditarAdmViewModel> BuscarAdmParaEdicao(Guid Id)
-        //{
-        //    var registro = await _service.BuscarAdm(Id)
-        //                    ?? throw new Exception("Registro não encontrado.");
-
-
-        //    return new EditarAdmViewModel
-        //    {
-        //        Id = Id,
-                
-        //            Nome = registro.Nome,
-        //            Email = registro.Email,
-        //            Senha = registro.Senha,
-        //            UsuarioValido = registro.UsuarioValido,
-        //        },
-        //    };
 
         }
     }
