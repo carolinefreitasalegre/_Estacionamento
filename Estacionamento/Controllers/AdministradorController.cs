@@ -36,11 +36,21 @@ namespace Estacionamento.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Administradores(RegistroAdmResponse response)
+        public async Task<IActionResult> Administradores()
         {
-            var lista = await _service.ListarAdm();
+         
+                var lista = await _service.ListarAdm();
 
-            return View(lista);
+                var response = lista.Select(adm => new RegistroAdmResponse
+                {
+                    Id = adm.Id,
+                    Nome = adm.Nome,
+                    Email = adm.Email
+                }).ToList();
+
+                return View(response);
+            
+
         }
 
         [HttpGet]
