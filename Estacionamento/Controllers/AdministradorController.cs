@@ -45,7 +45,8 @@ namespace Estacionamento.Controllers
                 {
                     Id = adm.Id,
                     Nome = adm.Nome,
-                    Email = adm.Email
+                    Email = adm.Email,
+                    UsuarioValido = adm.UsuarioValido
                 }).ToList();
 
                 return View(response);
