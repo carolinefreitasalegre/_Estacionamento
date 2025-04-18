@@ -23,19 +23,19 @@ namespace Estacionamento.Controllers
             _validator = validator;
             _validatorEdit = validatorEdit;
         }
-
+        [HttpGet("/administradores/inicio")]
         public IActionResult Index(string? token = null)
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("/administradores/registrar-admin")]
         public IActionResult CadastrarAdm()
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("/administradores/administradores-registrados")]
         public async Task<IActionResult> Administradores()
         {
          
@@ -54,7 +54,7 @@ namespace Estacionamento.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("/administradores/editar-admin")]
         public async Task<IActionResult> EditarAdm(Guid Id)
         {
             var adm = await _service.BuscarAdm(Id);

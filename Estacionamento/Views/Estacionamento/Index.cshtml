@@ -1,16 +1,11 @@
 ﻿
 @{
-    ViewData["Title"] = "Início - | ";
+    ViewData["Title"] = "Início | ";
 }
 
 @if (TempData["Mensagem"] != null)
 {
     <div class="alert alert-success">@TempData["Mensagem"]</div>
-}
-
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="alert alert-success">Bem-vindo, Administrador!</div>
 }
 
 

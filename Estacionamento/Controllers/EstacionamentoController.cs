@@ -24,20 +24,19 @@ namespace Estacionamento.Controllers
         }
 
 
-
+        [HttpGet("inicio")]
         public IActionResult Index(string? token = null)
         {
-            ViewBag.Token = token;
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("registrar-veiculo")]
         public IActionResult CadastrarVeiculo()
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("registrar-veiculo")]
         private async Task<RegistroEstacionametoEdicaoRequest> BuscarRegistroParaEdicao(Guid id)
         {
             var registro = await _service.BuscarRegistro(id)
@@ -51,7 +50,7 @@ namespace Estacionamento.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("editar-veiculo")]
         public async Task<IActionResult> EditarVeiculo(RegistroEstacionametoEdicaoRequest request)
         {
             var dto = await BuscarRegistroParaEdicao(request.Id);
@@ -59,7 +58,7 @@ namespace Estacionamento.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("veiculos-finalizados")]
         public async Task<IActionResult> ListaFinalizados()
         {
             var finalizados = await _service.ListarCarros();
@@ -67,7 +66,7 @@ namespace Estacionamento.Controllers
             return View("ListaFinalizados", finalizados);
         }
 
-        [HttpGet]
+        [HttpGet("veiculos-registrados")]
         public async Task<IActionResult> Veiculos()
         {
             var lista = await _service.ListarCarros();
@@ -88,7 +87,7 @@ namespace Estacionamento.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("pagamento")]
         public async Task<IActionResult> EfetuarPagamento(RegistroEstacionametoEdicaoRequest request)
         {
             var registro = await _service.BuscarRegistro(request.Id);
