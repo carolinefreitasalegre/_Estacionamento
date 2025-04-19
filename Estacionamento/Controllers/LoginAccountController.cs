@@ -13,13 +13,13 @@ namespace Estacionamento.Controllers
     public class LoginAccountController : Controller
     {
 
-
         private readonly AppDbContext _context;
 
         public LoginAccountController(AppDbContext context)
         {
             _context = context;
         }
+
 
         public IActionResult Login()
         {
@@ -30,11 +30,12 @@ namespace Estacionamento.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
-            var usuario = await _context.Administradores.FirstOrDefaultAsync(x => x.Email == login.Email && x.Senha == login.Senha);
+            var usuario = await _context.Administradores
+                .FirstOrDefaultAsync(x => x.Email == login.Email && x.Senha == login.Senha);
 
             if (usuario != null && usuario.UsuarioValido == true)
             {
-                var token = GerarToken();
+                var token = GerarToken(usuario);
 
                 Response.Cookies.Append("access_token", token, new CookieOptions
                 {
@@ -44,7 +45,6 @@ namespace Estacionamento.Controllers
                     Expires = DateTime.Now.AddMinutes(30)
                 });
 
-
                 return RedirectToAction("Index", "Estacionamento");
             }
 
@@ -52,21 +52,19 @@ namespace Estacionamento.Controllers
             return View();
         }
 
-        public IActionResult Logout()
+        private string GerarToken(Administrador usuario)
         {
-            Response.Cookies.Delete("access_token");
-            return RedirectToAction("Login");
-        }
-        private string GerarToken()
-        {
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
+
+            var key = Encoding.ASCII.GetBytes(jwtKey);
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("88cae4db-56cf-4ec0-be44-376fea86ca47");
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-            new Claim(ClaimTypes.Name, "admin"),
+            new Claim(ClaimTypes.Name, usuario.Nome),
+            new Claim(ClaimTypes.Email, usuario.Email),
             new Claim(ClaimTypes.Role, "Administrator")
         }),
                 Expires = DateTime.UtcNow.AddMinutes(30),
@@ -77,6 +75,15 @@ namespace Estacionamento.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+
+
+
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("access_token");
+            return RedirectToAction("Login");
         }
     }
 }

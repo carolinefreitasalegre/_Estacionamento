@@ -15,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -24,11 +23,15 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+
+    var jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
+        
+
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("88cae4db-56cf-4ec0-be44-376fea86ca47")),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateLifetime = true,
@@ -75,8 +78,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 var app = builder.Build();
-
-
 
 
 
