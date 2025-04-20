@@ -14,6 +14,9 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotNetEnv.Env.Load();
+
+
 
 builder.Services.AddAuthentication(options =>
 {
