@@ -51,7 +51,9 @@
 			}
 		</div>
 	</div>
-	<div class="mt-5 d-flex justify-content-end">
+	<div class="mt-5 d-flex justify-content-between">
+		<a class="border-0 btn btn-sm btn-primary" asp-controller="Relatorio" asp-action="GerarRelatorio">Gerar Relatório</a>
+	
 		<a class="border-0 btn btn-sm btn-primary" asp-controller="Estacionamento" asp-action="Index">Voltar ao início</a>
 	</div>
 </div>
@@ -67,4 +69,6 @@
 					placaTd.innerText = placaTexto.slice(0, 3) + '-' + placaTexto.slice(3);
 				}
 			}
-		});</script>
+	});
+		
+</script>

@@ -3,6 +3,7 @@ using Estacionamento.DataAccess.ContextApi;
 using Estacionamento.DataAccess.Repositories.RegistroAdmRepository;
 using Estacionamento.DataAccess.Repositories.RegistroCarroRepository;
 using Estacionamento.Dtos.Request;
+using Estacionamento.Services.GerarRelatorio;
 using Estacionamento.Services.PagamentoService;
 using Estacionamento.Services.RegistroAdmService;
 using Estacionamento.Services.RegistroCarroService;
@@ -61,7 +62,7 @@ builder.Services.AddScoped<IRegistrarCarroService, RegistrarCarroService>();
 builder.Services.AddScoped<IRegistrarAdmRepository, RegistrarAdmRepository>();
 builder.Services.AddScoped<IRegistrarAdmService, RegistrarAdmService>();
 
-
+builder.Services.AddScoped<IGerarRelatorioService, GerarRelatorioService>();
 
 builder.Services.AddTransient<IValidator<RegistroEstacionamentoRequest>, EstacionamentoRegistroValidator>();
 builder.Services.AddTransient<IValidator<RegistroEstacionametoEdicaoRequest>, EdicaoEstacionamentoRegistroValidation>();
