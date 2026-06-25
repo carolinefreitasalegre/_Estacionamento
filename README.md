@@ -53,14 +53,10 @@ Inclui controle de acesso com login, cadastro de veículos, administração de u
    git clone https://github.com/seu-usuario/estacionamento-pertime.git
 
 
-
-
    ✏️ Próximas melhorias
-	•	Deploy gratuito com Render ou Azure
 	•	Suporte a múltiplos estacionamentos (multi-tenant)
 	•	Integração com gateways de pagamento reais (ex: Mercado Pago, Stripe)
 	•	Dashboard com gráficos e KPIs
-	•	Logs, monitoramento e testes automatizados
 
 ⸻
 
