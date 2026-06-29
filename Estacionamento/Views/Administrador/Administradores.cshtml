@@ -102,7 +102,7 @@
 		console.log("Opening modal for ID:", id);
 
 
-	fetch(`/Administrador/EditarAdm?Id=${id}`)
+	fetch(`/administradores/editar-admin/${id}`)
 		.then(response => {
 			if (!response.ok) throw new Error('Erro ao carregar página');
 			return response.text();
@@ -114,7 +114,7 @@
 		})
 		.catch(err => {
 			alert("Erro ao buscar dados do administrador.");
-			console.error(err);
+			console.log(err);
 		});
 	}
 </script>
