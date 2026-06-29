@@ -4,11 +4,11 @@
     ViewData["Title"] = "CriarConta";
 }
 
-@* Mensagem de erro *@
 @if (TempData["Mensagem"] != null)
 {
-    <div class="alert alert-danger">@TempData["Mensagem"]</div>
+    <div class="alert alert-success">@TempData["Mensagem"]</div>
 }
+
 
 <div class="min-vh-100 d-flex align-items-center justify-content-center">
     <div class="container">
@@ -18,7 +18,6 @@
                 <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                     <div class="row g-0">
 
-                        @* Painel esquerdo - Boas-vindas *@
                         <div class="col-md-6 bg-primary bg-gradient text-white p-4 d-flex align-items-center">
                             <div class="text-center w-100">
                                 <h2 class="fw-bold mb-3 mt-3">Bem-vindo!</h2>
@@ -26,11 +25,9 @@
                             </div>
                         </div>
 
-                        @* Painel direito - Formulário *@
                         <div class="col-md-6 bg-white">
                             <div class="p-4">
 
-                                @* Cabeçalho do formulário *@
                                 <div class="text-center mb-4">
                                     <h3 class="fw-bold">Já possui conta?</h3>
                                     <a asp-action="Login" class="link-primary text-decoration-none">
@@ -38,10 +35,8 @@
                                     </a>
                                 </div>
 
-                                @* Formulário de cadastro *@
                                 <form asp-action="CriarConta" asp-controller="LoginAccount" method="post">
 
-                                    @* Campo: Nome *@
                                     <div class="mb-3">
                                         <label for="nome" class="form-label">Nome</label>
                                         <div class="input-group">
@@ -59,7 +54,6 @@
                                         <span asp-validation-for="Nome" class="text-danger small"></span>
                                     </div>
 
-                                    @* Campo: Email *@
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <div class="input-group">
@@ -78,7 +72,6 @@
                                         <span asp-validation-for="Email" class="text-danger small"></span>
                                     </div>
 
-                                    @* Campo: Senha *@
                                     <div class="mb-3">
                                         <label for="senha" class="form-label">Senha</label>
                                         <div class="input-group">
@@ -96,7 +89,6 @@
                                         <span asp-validation-for="Senha" class="text-danger small"></span>
                                     </div>
 
-                                    @* Campo: Confirmação de Senha *@
                                     <div class="mb-4">
                                         <label for="senhaConfirm" class="form-label">Confirme a senha</label>
                                         <div class="input-group">

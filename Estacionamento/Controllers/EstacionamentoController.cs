@@ -102,7 +102,7 @@ namespace Estacionamento.Controllers
 
 
 
-        [HttpPost("registrar-veiculo")]
+        [HttpPost]
         public async Task<IActionResult> CadastrarVeiculo(RegistroEstacionamentoRequest request)
         {
 
