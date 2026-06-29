@@ -40,7 +40,7 @@ namespace Estacionamento.Controllers
         private async Task<RegistroEstacionametoEdicaoRequest> BuscarRegistroParaEdicao(Guid id)
         {
             var registro = await _service.BuscarRegistro(id)
-                ?? throw new Exception("Registro não encontrado.");
+                ?? throw new Exception("Registro nï¿½o encontrado.");
 
             return new RegistroEstacionametoEdicaoRequest
             {
@@ -94,7 +94,7 @@ namespace Estacionamento.Controllers
 
 
             if (registro == null)
-                return NotFound("Registro não encontrado");
+                return NotFound("Registro nï¿½o encontrado");
 
             return View("EfetuarPagamento", registro);
         }
@@ -102,7 +102,7 @@ namespace Estacionamento.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost("registrar-veiculo")]
         public async Task<IActionResult> CadastrarVeiculo(RegistroEstacionamentoRequest request)
         {
 
@@ -124,7 +124,7 @@ namespace Estacionamento.Controllers
 
                 var registro = await _service.RegistrarCarro(request);
 
-                TempData["Mensagem"] = "Veículo registrado com sucesso!";
+                TempData["Mensagem"] = "Veï¿½culo registrado com sucesso!";
 
                 return RedirectToAction("Veiculos");
 
@@ -165,12 +165,12 @@ namespace Estacionamento.Controllers
                 await _service.EditarRegistro(request);
 
 
-                TempData["Mensagem"] = "Veículo editado com sucesso!";
+                TempData["Mensagem"] = "Veï¿½culo editado com sucesso!";
                 return RedirectToAction("Veiculos");
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao salvar alteração", ex);
+                throw new Exception("Erro ao salvar alteraï¿½ï¿½o", ex);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Estacionamento.Controllers
 
             if (registro == null)
             {
-                return NotFound("Registro não encontrado.");
+                return NotFound("Registro nï¿½o encontrado.");
             }
 
             try
