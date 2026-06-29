@@ -25,7 +25,7 @@ namespace Estacionamento.DataAccess.Repositories.RegistroAdmRepository
         {
             var admin = await _context.Administradores.FirstOrDefaultAsync(a => a.Id == Id) ?? throw new Exception("Administrador não encontrado.");
 
-            _context.Update(admin);
+            _context.Administradores.Update(admin);
             await _context.SaveChangesAsync();
 
             return adm;
@@ -33,7 +33,7 @@ namespace Estacionamento.DataAccess.Repositories.RegistroAdmRepository
 
         public async Task<Administrador> CadastrarAdm(Administrador adm)
         {
-            _context.Add(adm);
+            _context.Administradores.Add(adm);
             await _context.SaveChangesAsync();  
 
             return adm;
@@ -43,7 +43,7 @@ namespace Estacionamento.DataAccess.Repositories.RegistroAdmRepository
         {
             var admin = await _context.Administradores.FirstOrDefaultAsync(a => a.Id == Id) ?? throw new Exception("Administrador não encontrado.");
 
-            _context.Update(admin);
+            _context.Administradores.Update(admin);
             await _context.SaveChangesAsync();
 
             return admin;

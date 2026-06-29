@@ -36,63 +36,6 @@
                     </div>
 
                     <form asp-action="CadastrarAdm" asp-controller="Administrador" method="post">
-                        @* <div class="mb-3"> *@
-                        @*     <label for="nome" class="form-label">Nome</label> *@
-                        @*     <div class="input-group"> *@
-                        @*         <span class="input-group-text"> *@
-                        @*             <i class="bi bi-person"></i> *@
-                        @*         </span> *@
-                        @*         <input type="text" *@
-                        @*                class="form-control" *@
-                        @*                id="nome" *@
-                        @*                name="Nome" *@
-                        @*                placeholder="Digite o nome completo" *@
-                        @*                required> *@
-                        @*                <br /> *@
-                        @*         <span asp-validation-for="Nome" class="text-danger"></span> *@
-
-                        @*     </div> *@
-                        @* </div> *@
-
-                        @* <div class="mb-3"> *@
-                        @*     <label for="email" class="form-label">Email</label> *@
-                        @*     <div class="input-group"> *@
-                        @*         <span class="input-group-text"> *@
-                        @*             <i class="bi bi-envelope"></i> *@
-                        @*         </span> *@
-                        @*         <input type="email" *@
-                        @*                class="form-control" *@
-                        @*                id="email" *@
-                        @*                name="Email" *@
-                        @*                placeholder="Digite o email" *@
-                        @*                required *@
-                        @*                 minlength="8" *@
-                        @*         > *@
-                        @*         <br /> *@
-                        @*         <span asp-validation-for="Email" class="text-danger"></span> *@
-
-                        @*     </div> *@
-                        @* </div> *@
-
-                        @* <div class="mb-4"> *@
-                        @*     <label for="senha" class="form-label">Senha</label> *@
-                        @*     <div class="input-group"> *@
-                        @*         <span class="input-group-text"> *@
-                        @*             <i class="bi bi-lock"></i> *@
-                        @*         </span> *@
-                        @*         <input type="password" *@
-                        @*                class="form-control" *@
-                        @*                id="senha" *@
-                        @*                name="Senha" *@
-                        @*                placeholder="Digite a senha" *@
-                        @*                required> *@
-                        @*                <br /> *@
-                        @*         <span asp-validation-for="Senha" class="text-danger"></span> *@
-
-                        @*     </div> *@
-                        @* </div> *@
-
-
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
                             <div class="input-group">
@@ -141,8 +84,24 @@
                             </div>
                             <span asp-validation-for="Senha" class="text-danger small"></span>
                         </div>
+                        
+                        <div class="mb-4">
+                            <label for="senha" class="form-label">Confirmação da senha</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password"
+                                       class="form-control"
+                                       id="ConfirmacaoSenha"
+                                       name="ConfirmacaoSenha"
+                                       placeholder="Confirme sua senha"
+                                       required>
+                            </div>
+                            <span asp-validation-for="ConfirmacaoSenha" class="text-danger small"></span>
+                        </div>
 
-                        <button type="submit" class="btn btn-primary w-100 py-2">
+                        <button id="btn" type="submit" class="btn btn-primary w-100 py-2">
                             Cadastrar Administrador
                         </button>
                     </form>
@@ -152,3 +111,21 @@
     </div>
 </div>
 
+@* @section Scripts *@
+@* { *@
+@*     <script> *@
+@*         const btn = document.getElementById("btn"); *@
+@*         const nome = document.getElementById("nome"); *@
+@*         const email = document.getElementById("email"); *@
+@*         const senha = document.getElementById("senha"); *@
+@* *@
+@*         btn.addEventListener("click", () => { *@
+@*             alert(nome + email + senha); *@
+@*         }); *@
+@*     </script> *@
+@* } *@
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

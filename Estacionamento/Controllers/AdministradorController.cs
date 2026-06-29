@@ -120,7 +120,7 @@ namespace Estacionamento.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("/administradores/registrar-admin")]
         public async Task<IActionResult> CadastrarAdm(RegistroAdmRequest request)
         {
             try
