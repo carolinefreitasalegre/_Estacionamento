@@ -124,7 +124,7 @@ namespace Estacionamento.Controllers
 
                 var registro = await _service.RegistrarCarro(request);
 
-                TempData["Mensagem"] = "Veículo registrado com sucesso!";
+                TempData["Mensagem"] = "Ve�culo registrado com sucesso!";
 
                 return RedirectToAction("Veiculos");
 

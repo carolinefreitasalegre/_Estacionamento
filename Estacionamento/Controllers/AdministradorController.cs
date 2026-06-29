@@ -36,7 +36,7 @@ namespace Estacionamento.Controllers
             return View();
         }
 
-        [HttpGet("/administradores/administradores-registrados")]
+        [HttpGet("/administradores/administradores-registrados/")]
         public async Task<IActionResult> Administradores()
         {
          
@@ -51,11 +51,10 @@ namespace Estacionamento.Controllers
                 }).ToList();
 
                 return View(response);
-            
 
         }
 
-        [HttpGet("/administradores/editar-admin")]
+        [HttpGet("/administradores/editar-admin/{id}")]
         public async Task<IActionResult> EditarAdm(Guid Id)
         {
             var adm = await _service.BuscarAdm(Id);
@@ -76,11 +75,8 @@ namespace Estacionamento.Controllers
             return PartialView("_EditarAdm", viewModel);
         }
 
-
         
-        
-        
-        [HttpPost]
+        [HttpPost("/administradores/editar-admin/{id}")]
         public async Task<IActionResult> EditarAdm(Guid Id, RegistroAdmEdicaoRequest request)
         {
 
@@ -120,7 +116,7 @@ namespace Estacionamento.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("/administradores/registrar-admin")]
         public async Task<IActionResult> CadastrarAdm(RegistroAdmRequest request)
         {
             try
