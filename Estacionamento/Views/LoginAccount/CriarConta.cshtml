@@ -1,0 +1,136 @@
+﻿@model Estacionamento.Dtos.Request.RegistroAdmRequest
+
+@{
+    ViewData["Title"] = "CriarConta";
+}
+
+@* Mensagem de erro *@
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-danger">@TempData["Mensagem"]</div>
+}
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="row g-0">
+
+                        @* Painel esquerdo - Boas-vindas *@
+                        <div class="col-md-6 bg-primary bg-gradient text-white p-4 d-flex align-items-center">
+                            <div class="text-center w-100">
+                                <h2 class="fw-bold mb-3 mt-3">Bem-vindo!</h2>
+                                <p class="text-white-50 mb-2">Crie sua conta agora mesmo!</p>
+                            </div>
+                        </div>
+
+                        @* Painel direito - Formulário *@
+                        <div class="col-md-6 bg-white">
+                            <div class="p-4">
+
+                                @* Cabeçalho do formulário *@
+                                <div class="text-center mb-4">
+                                    <h3 class="fw-bold">Já possui conta?</h3>
+                                    <a asp-action="Login" class="link-primary text-decoration-none">
+                                        <p class="text-muted">Entre com suas credenciais para continuar</p>
+                                    </a>
+                                </div>
+
+                                @* Formulário de cadastro *@
+                                <form asp-action="CriarConta" asp-controller="LoginAccount" method="post">
+
+                                    @* Campo: Nome *@
+                                    <div class="mb-3">
+                                        <label for="nome" class="form-label">Nome</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-person"></i>
+                                            </span>
+                                            <input asp-for="Nome"
+                                                   type="text"
+                                                   class="form-control"
+                                                   id="nome"
+                                                   name="Nome"
+                                                   placeholder="Digite o nome completo"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="Nome" class="text-danger small"></span>
+                                    </div>
+
+                                    @* Campo: Email *@
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-envelope"></i>
+                                            </span>
+                                            <input asp-for="Email"
+                                                   type="email"
+                                                   class="form-control"
+                                                   id="email"
+                                                   name="Email"
+                                                   placeholder="Digite o email"
+                                                   minlength="8"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="Email" class="text-danger small"></span>
+                                    </div>
+
+                                    @* Campo: Senha *@
+                                    <div class="mb-3">
+                                        <label for="senha" class="form-label">Senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-lock"></i>
+                                            </span>
+                                            <input asp-for="Senha"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="senha"
+                                                   name="Senha"
+                                                   placeholder="Digite a senha"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="Senha" class="text-danger small"></span>
+                                    </div>
+
+                                    @* Campo: Confirmação de Senha *@
+                                    <div class="mb-4">
+                                        <label for="senhaConfirm" class="form-label">Confirme a senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-lock"></i>
+                                            </span>
+                                            <input asp-for="ConfirmacaoSenha"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="senhaConfirm"
+                                                   name="ConfirmacaoSenha"
+                                                   placeholder="Confirme a senha"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="ConfirmacaoSenha" class="text-danger small"></span>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 py-2">
+                                        Salvar
+                                    </button>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

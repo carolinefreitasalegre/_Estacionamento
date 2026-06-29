@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Estacionamento.Dtos.Request
 {
@@ -16,8 +17,11 @@ namespace Estacionamento.Dtos.Request
         [Required(ErrorMessage = "A senha é obrigatória")]
         [MinLength(6, ErrorMessage = "A senha deve ter no mínimo 6 caracteres")]
         public string Senha { get; set; }
-
-
+        
+        [Required(ErrorMessage = "Confirmação de senha obrigatória")]
+        [Compare(nameof(Senha), ErrorMessage = "As senhas não coincidem.")]
+        public string ConfirmacaoSenha { get; set; }
+        
         public bool UsuarioValido { get; set; } = true;
     }
 }

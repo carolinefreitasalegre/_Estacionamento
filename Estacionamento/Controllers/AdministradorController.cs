@@ -28,6 +28,7 @@ namespace Estacionamento.Controllers
         {
             return View();
         }
+        
 
         [HttpGet("/administradores/registrar-admin")]
         public IActionResult CadastrarAdm()
@@ -76,7 +77,9 @@ namespace Estacionamento.Controllers
         }
 
 
-
+        
+        
+        
         [HttpPost]
         public async Task<IActionResult> EditarAdm(Guid Id, RegistroAdmEdicaoRequest request)
         {

@@ -17,8 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 DotNetEnv.Env.Load();
 
-
-
+var jwtKey = builder.Configuration["Jwt:SecretKey"] ?? builder.Configuration["JWT_SECRET_KEY"];
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -27,13 +26,9 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-
-    var jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        
-
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
         ValidateIssuer = false,
@@ -53,15 +48,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddScoped<EstacionamentoCalculoService>();
-
 builder.Services.AddScoped<IRegistrarCarroRepository, RegistrarCarroRepository>();
 builder.Services.AddScoped<IRegistrarCarroService, RegistrarCarroService>();
-
-
 builder.Services.AddScoped<IRegistrarAdmRepository, RegistrarAdmRepository>();
 builder.Services.AddScoped<IRegistrarAdmService, RegistrarAdmService>();
-
 builder.Services.AddScoped<IGerarRelatorioService, GerarRelatorioService>();
 
 builder.Services.AddTransient<IValidator<RegistroEstacionamentoRequest>, EstacionamentoRegistroValidator>();
@@ -69,22 +61,23 @@ builder.Services.AddTransient<IValidator<RegistroEstacionametoEdicaoRequest>, Ed
 builder.Services.AddTransient<IValidator<RegistroAdmRequest>, EstacionamentoRegistroAdminValidator>();
 builder.Services.AddTransient<IValidator<RegistroAdmEdicaoRequest>, EdicaoAdminValidator>();
 
-
 builder.Services.AddControllersWithViews();
-
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"));
 });
 
-
-
-
 var app = builder.Build();
 
-
-
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.Migrate();
+    }
+}
 
 if (!app.Environment.IsDevelopment())
 {
