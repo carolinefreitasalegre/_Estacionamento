@@ -40,7 +40,7 @@ namespace Estacionamento.Controllers
         private async Task<RegistroEstacionametoEdicaoRequest> BuscarRegistroParaEdicao(Guid id)
         {
             var registro = await _service.BuscarRegistro(id)
-                ?? throw new Exception("Registro n�o encontrado.");
+                ?? throw new Exception("Registro não encontrado.");
 
             return new RegistroEstacionametoEdicaoRequest
             {
@@ -94,7 +94,7 @@ namespace Estacionamento.Controllers
 
 
             if (registro == null)
-                return NotFound("Registro n�o encontrado");
+                return NotFound("Registro não encontrado");
 
             return View("EfetuarPagamento", registro);
         }
@@ -102,7 +102,7 @@ namespace Estacionamento.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost("registrar-veiculo")]
         public async Task<IActionResult> CadastrarVeiculo(RegistroEstacionamentoRequest request)
         {
 
@@ -124,7 +124,7 @@ namespace Estacionamento.Controllers
 
                 var registro = await _service.RegistrarCarro(request);
 
-                TempData["Mensagem"] = "Ve�culo registrado com sucesso!";
+                TempData["Mensagem"] = "Veículo registrado com sucesso!";
 
                 return RedirectToAction("Veiculos");
 
@@ -136,7 +136,7 @@ namespace Estacionamento.Controllers
         }
      
 
-        [HttpPost]
+        [HttpPost("editar-veiculo")]
         public async Task<IActionResult> EditarVeiculo(Guid Id, RegistroEstacionametoEdicaoRequest request)
         {
             try
@@ -165,23 +165,23 @@ namespace Estacionamento.Controllers
                 await _service.EditarRegistro(request);
 
 
-                TempData["Mensagem"] = "Ve�culo editado com sucesso!";
+                TempData["Mensagem"] = "Veículo editado com sucesso!";
                 return RedirectToAction("Veiculos");
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao salvar altera��o", ex);
+                throw new Exception("Erro ao salvar alteração", ex);
             }
         }
 
-        [HttpPost]
+        [HttpPost("pagamento")]
         public async Task<IActionResult> EfetuarPagamento(Guid Id, RegistroEstacionametoEdicaoRequest request)
         {
             var registro = await _service.BuscarRegistro(Id);
 
             if (registro == null)
             {
-                return NotFound("Registro n�o encontrado.");
+                return NotFound("Registro não encontrado.");
             }
 
             try
