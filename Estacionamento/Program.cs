@@ -12,12 +12,29 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using DotNetEnv;
+
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+var envFile = $".env.{environment.ToLower()}";
+
+if (File.Exists(envFile))
+{
+    Env.Load(envFile);
+}
+else
+{
+    Env.Load();
+    Console.WriteLine($"Ambiente: {environment}");
+    Console.WriteLine($"Procurando arquivo: {envFile}");
+    Console.WriteLine($"Arquivo existe? {File.Exists(envFile)}");
+    Console.WriteLine($"Diretório atual: {Directory.GetCurrentDirectory()}");
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
-DotNetEnv.Env.Load();
+var jwtKey = builder.Configuration["JWT_SECRET_KEY"];
+var connectionString = builder.Configuration["DB_CONNECTION_STRING"];
 
-var jwtKey = builder.Configuration["Jwt:SecretKey"] ?? builder.Configuration["JWT_SECRET_KEY"];
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,7 +65,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddScoped<EstacionamentoCalculoService>();
 builder.Services.AddScoped<IRegistrarCarroRepository, RegistrarCarroRepository>();
 builder.Services.AddScoped<IRegistrarCarroService, RegistrarCarroService>();
@@ -65,7 +81,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"));
+    options.UseSqlServer(connectionString);
 });
 
 var app = builder.Build();
