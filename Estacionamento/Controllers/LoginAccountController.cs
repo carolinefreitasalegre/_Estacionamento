@@ -61,7 +61,7 @@ namespace Estacionamento.Controllers
         
         private string GerarToken(Administrador usuario)
         {
-            var jwtKey = _configuration["Jwt:SecretKey"];
+            var jwtKey = _configuration["JWT_SECRET_KEY"];
 
             if (string.IsNullOrEmpty(jwtKey))
             {
