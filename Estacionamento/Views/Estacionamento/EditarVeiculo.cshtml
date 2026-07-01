@@ -19,8 +19,10 @@
 						<div class="form-group mb-3">
 							<label for="placa" class="form-label">Placa</label>
 							<input type="text" class="form-control" id="placa" name="PlacaCarro" asp-for="PlacaCarro" required maxlength="8" min="8" />
-							<span asp-validation-for="PlacaCarro" class="text-danger"></span>
-
+							@if (Model.PlacaCarro.Length != 7)
+							{
+								<span asp-validation-for="PlacaCarro" class="text-danger"></span>
+							}
 
 						</div>
 
@@ -31,7 +33,8 @@
 
 						<div class="d-flex justify-content-between">
 							<button type="submit" class="btn btn-primary" id="btn">Salvar Alterações</button>
-							<a asp-controller="Estacionamento" asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+							
+								<a asp-controller="Estacionamento" asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
 						</div>
 					</form>
 				</div>
