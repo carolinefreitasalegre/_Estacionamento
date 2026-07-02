@@ -24,10 +24,6 @@ if (File.Exists(envFile))
 else
 {
     Env.Load();
-    Console.WriteLine($"Ambiente: {environment}");
-    Console.WriteLine($"Procurando arquivo: {envFile}");
-    Console.WriteLine($"Arquivo existe? {File.Exists(envFile)}");
-    Console.WriteLine($"Diretório atual: {Directory.GetCurrentDirectory()}");
 }
 
 var builder = WebApplication.CreateBuilder(args);
