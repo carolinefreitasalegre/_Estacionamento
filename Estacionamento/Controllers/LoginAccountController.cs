@@ -43,7 +43,7 @@ namespace Estacionamento.Controllers
             if (usuario != null && usuario.UsuarioValido == true)
             {
                 var token = GerarToken(usuario);
-                Console.WriteLine(token);
+
                 Response.Cookies.Append("access_token", token, new CookieOptions
                 {
                     HttpOnly = true,
