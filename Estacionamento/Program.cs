@@ -21,10 +21,6 @@ if (File.Exists(envFile))
 {
     Env.Load(envFile);
 }
-else
-{
-    Env.Load();
-}
 
 var builder = WebApplication.CreateBuilder(args);
 

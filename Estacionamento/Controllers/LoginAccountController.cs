@@ -94,6 +94,11 @@ namespace Estacionamento.Controllers
             return View();
         }
 
+        [HttpGet("/recuperar-senha")]
+        public IActionResult RecuperarSenha()
+        {
+            return View();
+        }
         
         [HttpPost("/criar-conta")]
         public async Task<IActionResult> CriarConta(RegistroAdmRequest request)
