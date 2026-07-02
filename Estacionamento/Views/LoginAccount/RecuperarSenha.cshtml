@@ -1,0 +1,111 @@
+@model Estacionamento.Dtos.Request.RegistroAdmRequest
+
+@{
+	ViewData["Title"] = "RecuperarSenha";
+}
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-danger">@TempData["Mensagem"]</div>
+}
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6 col-xl-10 w-50">
+
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-md-6 bg-white w-100">
+                            <div class="p-4">
+
+                                <div class="text-center mb-4">
+                                    <a asp-action="Login" class="link-primary text-decoration-none">
+                                        <p class="link-primary text-end ">Voltar</p>
+                                    </a>
+                                </div>
+
+                                <form asp-action="CriarConta" asp-controller="LoginAccount" method="post">
+
+                                   
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-envelope"></i>
+                                            </span>
+                                            <input asp-for="Email"
+                                                   type="email"
+                                                   class="form-control"
+                                                   id="email"
+                                                   name="Email"
+                                                   placeholder="Digite o email"
+                                                   minlength="8"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="Email" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="senha" class="form-label">Nova senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-lock"></i>
+                                            </span>
+                                            <input asp-for="Senha"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="senha"
+                                                   name="Senha"
+                                                   placeholder="Digite a senha"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="Senha" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="senhaConfirm" class="form-label">Confirme a senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-lock"></i>
+                                            </span>
+                                            <input asp-for="ConfirmacaoSenha"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="senhaConfirm"
+                                                   name="ConfirmacaoSenha"
+                                                   placeholder="Confirme a senha"
+                                                   required>
+                                        </div>
+                                        <span asp-validation-for="ConfirmacaoSenha" class="text-danger small"></span>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 py-2">
+                                        Salvar
+                                    </button>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+
+
+
+
+
+
+
+
