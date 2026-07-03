@@ -1,3 +1,6 @@
+## projeto passando por atualização e melhorias constantes!!!
+
+
 # Estacionamento PerTime
 
 **Aplicação Web desenvolvida com .NET 8 para gerenciamento de estacionamentos pagos.**  
