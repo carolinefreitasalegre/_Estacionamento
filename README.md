@@ -1,4 +1,4 @@
-## projeto passando por atualização e melhorias constantes!!!
+## Projeto passando por atualização e melhorias constantes!!!
 
 
 # Estacionamento PerTime
@@ -20,7 +20,6 @@ Inclui controle de acesso com login, cadastro de veículos, administração de u
 - **FluentValidation**
 - **JWT Authentication**
 - **Bootstrap 5 + Bootstrap Icons**
-- **Trello** (para organização de tarefas)
 
 ---
 
