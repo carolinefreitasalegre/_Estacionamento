@@ -7,7 +7,8 @@
 Inclui controle de acesso com login, cadastro de veículos, administração de usuários e simulação de pagamentos — tudo em um ambiente moderno, organizado e validado com muito carinho!
 
 ![.NET](https://img.shields.io/badge/.NET-8.0-blueviolet)
-![EntityFramework](https://img.shields.io/badge/EntityFrameworkCore-8.0-success)
+<img width="1920" height="917" alt="image" src="https://github.com/user-attachments/assets/a52fc66d-83ca-4b8c-b6b0-4918d922f1e7" />
+
 ![SQLServer](https://img.shields.io/badge/Database-SQLServer-lightgrey)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
@@ -43,8 +44,9 @@ Inclui controle de acesso com login, cadastro de veículos, administração de u
 ## 🖼 Prints da aplicação
 ![image](https://github.com/user-attachments/assets/6bd6af19-af0d-413e-9529-dbc5856225db)
 
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/8b2eb84c-cc73-4e7b-84ae-4bc5536a042c" />
 
-![image](https://github.com/user-attachments/assets/6d4e97c7-3190-4800-9691-9c3b706bc041)
+
 
 ---
 
