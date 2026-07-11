@@ -1,72 +1,118 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] Controle de Estacionamento</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/Estacionamento.styles.css" asp-append-version="true" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] Controle de Estacionamento</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Estacionamento.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 
+    <style>
+        .custom-toggler .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
 
+        .custom-toggler {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .custom-nav-link {
+            transition: background-color 0.2s ease-in-out, padding-left 0.2s ease-in-out;
+            padding: 10px 15px;
+            border-radius: 4px;
+        }
+
+        .custom-nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding-left: 20px;
+            color: #fff !important;
+        }
+    </style>
 </head>
 <body>
-	<header>
-		@if (User.Identity.IsAuthenticated)
-		{
-			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-				<div class="container-fluid">
+    <header>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <nav class="navbar bg-primary navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+                <div class="container-fluid">
 
-					<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ">
-						<ul class="navbar-nav flex-grow-1 align-items-center">
+                    <a class="navbar-brand" asp-area="" asp-controller="Estacionamento" asp-action="Index">
+                        <img src="~/favicon.ico" alt="Ícone" style="width: 45px; height: 45px;"/>
+                    </a>
 
+                    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral"
+                            aria-controls="menuLateral" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-							<li>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Estacionamento" asp-action="Index">
-									<img src="~/icon.ico" alt="Ícone" style="width: 45px; height: 45px;" />
-								</a>
+                </div>
+            </nav>
 
-								<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">
-									<span class="navbar-toggler-icon"></span>
-								</button>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-controller="LoginAccount" asp-action="Logout">Sair</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		}
-	</header>
-	<div class="container">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
+            <div class="offcanvas offcanvas-start bg-primary" tabindex="-1" id="menuLateral">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title text-white">Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-white custom-nav-link" asp-controller="Estacionamento" asp-action="Index">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white custom-nav-link" asp-controller="Estacionamento" asp-action="Veiculos">Veículos Registrados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white custom-nav-link" asp-controller="Estacionamento" asp-action="CadastrarVeiculo">Registrar Veículo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white custom-nav-link" asp-controller="Estacionamento" asp-action="ListaFinalizados">Vagas Finalizadas</a>
 
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2025 - Estacionamento - Estacionamento PerTime
-		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@await RenderSectionAsync("Scripts", required: false)
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white custom-nav-link" asp-controller="Administrador" asp-action="Index">Administradores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white custom-nav-link" asp-controller="LoginAccount" asp-action="Logout">Sair</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        }
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - Estacionamento - Estacionamento PerTime
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+        $(document).ajaxSend(function (event, xhr) {
+            var token = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('access_token='))
+                ?.split('=')[1];
+
+            if (token) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<script>
-	$(document).ajaxSend(function (event, xhr) {
-		var token = document.cookie
-			.split('; ')
-			.find(row => row.startsWith('access_token='))
-			?.split('=')[1];
-
-		if (token) {
-			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-		}
-	});
-</script>

@@ -1,79 +1,146 @@
-﻿
-@{
-    ViewData["Title"] = "Início | ";
-}
-
-@if (TempData["Mensagem"] != null)
-{
-    <div class="alert alert-success">@TempData["Mensagem"]</div>
-}
+﻿@page
+@using Estacionamento.Dtos.Response
+@using Estacionamento.Models
 
 
-
-<div class="container py-5">
-    <h2 class="text-center mb-5 fw-bold text-primary">Sistema de Registro de Veículos</h2>
-
-    <div class="row justify-content-center g-4">
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card h-100 border-0 rounded-4">
-                <div class="card-body text-center p-4">
-                    <div class="icon-circle blue-icon mb-3">
-                        <i class="bi bi-car-front-fill fs-2"></i>
-                    </div>
-                    <h2 class="card-title h4 mb-3">Veículos Registrados</h2>
-                    <p class="card-text text-muted mb-4">Veículos registrados no sistema</p>
-                    <a asp-controller="Estacionamento" asp-action="Veiculos" class="btn btn-primary w-100 py-2 rounded-3 mt-4">Acessar</a>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="row w-100 ">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+                <div class="card-body">
+                    <h5 class="card-title">Fluxo de Veículos (Hoje)</h5>
+                    <div id="grafico-fluxo"></div>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card h-100 border-0 rounded-4">
-                <div class="card-body text-center p-4">
-                    <div class="icon-circle blue-icon mb-3">
-                        <i class="bi bi-car-front-fill fs-2"></i>
-                    </div>
-                    <h2 class="card-title h4 mb-3">Registrar Veículo</h2>
-                    <p class="card-text text-muted mb-4">Cadastre um novo veículo no sistema</p>
-                    <a asp-controller="Estacionamento" asp-action="CadastrarVeiculo" class="btn btn-primary w-100 py-2 rounded-3">Acessar</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card h-100 border-0 rounded-4">
-                <div class="card-body text-center p-4">
-                    <div class="icon-circle green-icon mb-3">
-                        <i class="bi bi-clipboard2-check-fill fs-2"></i>
-                    </div>
-                    <h2 class="card-title h4 mb-3">Registros Finalizados</h2>
-                    <p class="card-text text-muted mb-4">Visualize todos os registros completos</p>
-                    <a asp-controller="Estacionamento" asp-action="ListaFinalizados" class="btn btn-primary w-100 py-2 rounded-3">Acessar</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card h-100 border-0 rounded-4">
-                <div class="card-body text-center p-4">
-                    <div class="icon-circle purple-icon mb-3">
-                        <i class="bi bi-people-fill fs-2"></i>
-                    </div>
-                    <h2 class="card-title h4 mb-3">Administradores</h2>
-                    <p class="card-text text-muted mb-0">Gerencie as contas administrativas</p>
-                    <a asp-controller="Administrador" asp-action="Index" class="btn btn-danger w-100 py-2 rounded-3 mt-4" mt-3>Acessar</a>
-
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+                <div class="card-body">
+                    <h5 class="card-title">Status de Ocupação do Pátio</h5>
+                    <div id="grafico-ocupacao"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+  <script>
+    var dados = @Html.Raw(ViewBag.DadosGraficoJson ?? "[]");
+    var fluxoPorHora = {};
+    var contador = 0;
+    
+    dados.forEach(function (item) {
+        
+        if(!item.Finalizado){
+            contador++;
+        }
+        
+        if (item.Entrada) {
+            var horaEntrada = new Date(item.Entrada).getHours();
+            if (!fluxoPorHora[horaEntrada]) fluxoPorHora[horaEntrada] = { entrada: 0, saida: 0 };
+            fluxoPorHora[horaEntrada].entrada++;
+        }
 
+        if (item.Saida) {
+            var horaSaida = new Date(item.Saida).getHours();
+            if (!fluxoPorHora[horaSaida]) fluxoPorHora[horaSaida] = { entrada: 0, saida: 0 };
+            fluxoPorHora[horaSaida].saida++;
+        }
+    });
+
+    var horasOrdenadas = Object.keys(fluxoPorHora).sort(function (a, b) {
+        return parseInt(a) - parseInt(b);
+    });
+
+    var labels = horasOrdenadas.map(function (h) { return h + 'h'; });
+    var entrada = horasOrdenadas.map(function (h) { return fluxoPorHora[h].entrada; });
+    var saida = horasOrdenadas.map(function (h) { return fluxoPorHora[h].saida; });
+
+    var optionsFluxo = {
+        series: [
+            { name: 'Entradas', data: entrada },
+            { name: 'Saídas', data: saida }
+        ],
+        chart: { height: 350, type: 'area', toolbar: { show: false } },
+        colors: ['#007bff', '#dc3545'],
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 3 },
+        xaxis: { categories: labels },
+        fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0.05, stops: [0, 90, 100] } }
+    };
+
+    var chartFluxo = new ApexCharts(document.querySelector('#grafico-fluxo'), optionsFluxo);
+    chartFluxo.render();
+
+
+    var vagasOcupadas = dados.filter(function (item) {
+        return item.Entrada && !item.Saida;
+    }).length;
+
+    var capacidadeTotal = 100; 
+    var vagasLivres = Math.max(capacidadeTotal - contador, 0);
+
+    var optionsOcupacao = {
+        series: [vagasOcupadas, vagasLivres],
+        chart: {
+            height: 370,
+            type: 'donut',
+        },
+        labels: ['Vagas Ocupadas', 'Vagas Livres'],
+        colors: ['#007bff', '#e9ecef'],
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '75%',
+                    labels: {
+                        show: true,
+                        name: {
+                            show: true,
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: '#6c757d',
+                            offsetY: -10
+                        },
+                        value: {
+                            show: true,
+                            fontSize: '24px',
+                            fontWeight: 700,
+                            color: '#343a40',
+                            offsetY: 10,
+                            formatter: function (val) {
+                                return val + " vagas";
+                            }
+                        },
+                        total: {
+                            show: true,
+                            label: 'Capacidade Total',
+                            color: '#6c757d',
+                            formatter: function (w) {
+                                return w.globals.seriesTotals.reduce((a, b) => a + b, 0) + " vagas";
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        legend: {
+            position: 'bottom',
+            fontSize: '13px',
+            fontWeight: 500
+        },
+        dataLabels: {
+            enabled: true,
+            dropShadow: { enabled: false }
+        }
+    };
+
+    var chartOcupacao = new ApexCharts(document.querySelector('#grafico-ocupacao'), optionsOcupacao);
+    chartOcupacao.render();
+</script>
+}
 <style>
-	
-
     .card {
         transition: box-shadow 0.3s ease;
     }
