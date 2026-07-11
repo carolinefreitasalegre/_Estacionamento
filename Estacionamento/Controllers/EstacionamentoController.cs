@@ -1,9 +1,13 @@
+using System.Text.Json;
 using Estacionamento.Dtos.Request;
+using Estacionamento.Dtos.Response;
 using Estacionamento.Services.FactoryMethod;
 using Estacionamento.Services.RegistroCarroService;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Estacionamento.Controllers
 {
@@ -25,8 +29,25 @@ namespace Estacionamento.Controllers
 
 
         [HttpGet("inicio")]
-        public IActionResult Index(string? token = null)
+        public async Task<IActionResult> Index(string? token = null)
         {
+            var dados = await _service.ListarCarros();
+            var hoje = DateTime.Today;
+            var dadosFormatados = dados
+                .Where(x=>x.HorarioEntrada.Date == hoje 
+                || (x.HorarioSaida.HasValue && x.HorarioSaida.Value.Date == hoje))
+                .Select(x => new
+            {
+                Finalizado = x.Finalizado,
+                Placa = x.PlacaCarro,
+                Entrada = x.HorarioEntrada.ToString("HH:dd"),
+                Saida = x.HorarioSaida.ToString(),
+
+            });
+            
+            
+            ViewBag.DadosGraficoJson = JsonConvert.SerializeObject(dadosFormatados);
+            
             return View();
         }
 
